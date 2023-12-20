@@ -47,6 +47,23 @@ router.get('/:name', async (req, res) =>{
     }
 })
 
+router.get('/:name/:id', async (req, res) => {
+    try {
+        const user = await User.find({
+            Name: req.params.name,
+            _id : req.params.id
+        }); // Assuming 'User' is your Mongoose model
+
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+        res.send(user);
+    } catch (error) {
+        console.error(error); // Log the error for debugging
+        res.status(500).send('Server Error');
+    }
+});
+
 // router.post('/upload/:id', async (req, res) => {     
 //     console.log(req);
 //     try {
